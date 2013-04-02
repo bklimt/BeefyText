@@ -6,9 +6,9 @@
   "version": "1.0",
 
   "icons": {
-    "16": "img/steak.svg",
-    "48": "img/steak.svg",
-    "128": "img/steak.svg"
+    "16": "img/icon16.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
   },
 
   "permissions": [
@@ -18,8 +18,8 @@
   "browser_action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "19": "img/steak.svg",
-      "38": "img/steak.svg"
+      "19": "img/icon19.png",
+      "38": "img/icon38.png"
     }
   },
 
