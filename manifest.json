@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+
+  "name": "BeefyText",
+  "description": "Makes text thicker.",
+  "version": "1.0",
+
+  "icons": {
+    "16": "img/steak.svg",
+    "48": "img/steak.svg",
+    "128": "img/steak.svg"
+  },
+
+  "permissions": [
+    "https://secure.flickr.com/"
+  ],
+
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "19": "img/steak.svg",
+      "38": "img/steak.svg"
+    }
+  },
+
+  "content_scripts": [{
+    "matches": ["*://*/*"],
+    "js": ["ext/jquery.js", "ext/underscore.js", "beefy_text.js"]
+  }]
+}

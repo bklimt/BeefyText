@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Beefy Text</title>
+    <link href="css/ui-lightness/jquery-ui-1.10.2.custom.css" rel="stylesheet">
+    <style>
+      body {
+        min-width: 357px;
+        overflow-x: hidden;
+      }
+
+      #slider {
+        width: 300px;
+        margin: 20px;
+      }
+    </style>
+
+    <!--
+      - JavaScript and HTML must be in separate files: see our Content Security
+      - Policy documentation[1] for details and explanation.
+      -
+      - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
+     -->
+    <script src="ext/jquery.js"></script>
+	  <script src="ext/jquery-ui.js"></script>
+    <script src="popup.js"></script>
+  </head>
+  <body>
+    <label id="sliderLabel">Font Weight Range: [100, 900]</label><br />
+    <div id="slider"></div>
+  </body>
+</html>
+
