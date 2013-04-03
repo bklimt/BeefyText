@@ -2,17 +2,53 @@
 <html>
   <head>
     <title>Beefy Text</title>
+    <link href="css/reset.css" rel="stylesheet">
     <link href="css/ui-lightness/jquery-ui-1.10.2.custom.css" rel="stylesheet">
     <style>
       body {
-        min-width: 357px;
+        width: 500px;
+        min-width: 500px;
+        max-width: 500px;
+        margin: 10px;
         overflow-x: hidden;
+        font-family: Helvetica, Arial, "Sans Serif";
+        font-size: 10pt;
       }
 
-      #slider {
-        width: 300px;
-        margin: 20px;
+      th {
+        font-size: 14pt;
+        text-align: left;
       }
+
+      table {
+        width: 100%;
+      }
+
+      td {
+        text-align: right;
+        vertical-align: middle;
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
+
+      #tooltip {
+        position: absolute;
+        display: none;
+        z-index: 10;
+        background: white;
+        border: solid black 1px;
+        padding: 5px;
+      }
+
+      .slider {
+        min-width: 200px;
+        margin: 10px;
+      }
+
+      .sliderLabel {
+        margin: 10px;
+      }
+
     </style>
 
     <!--
@@ -26,8 +62,19 @@
     <script src="popup.js"></script>
   </head>
   <body>
-    <label id="sliderLabel">Font Weight Range: [100, 900]</label><br />
-    <div id="slider"></div>
+    <div id="tooltip"></div>
+    <table>
+      <tr>
+        <th colspan="2">Beefy Text</th>
+      <tr>
+        <td><span class="sliderLabel">Font Weight Range:</span></td>
+        <td><div class="slider" id="fontWeightSlider"></div></td>
+      </tr>
+      <tr>
+        <td><span class="sliderLabel">Font Size Range:</span></td>
+        <td><div class="slider" id="fontSizeSlider"></div></td>
+      </tr>
+    </table>
   </body>
 </html>
 
