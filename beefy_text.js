@@ -51,6 +51,7 @@ var normalizeFontWeight = function(minWeight, maxWeight) {
   }
 };
 
+
 /*
  * Font Size Methods
  */
@@ -113,6 +114,19 @@ var normalizeFontSize = function(minSize, maxSize) {
 
 
 /*
+ * Text Color Methods
+ */
+
+var overrideTextColor = function(color) {
+  $("body").css("color", color);
+  var elements = $("*").filter(function() {
+    return $(this).css("color");
+  });
+  elements.css("color", color);
+};
+
+
+/*
  * Routers
  */
 
@@ -124,6 +138,10 @@ var process = function(message) {
   }
   if (message.minFontSize || message.maxFontSize) {
     normalizeFontSize(message.minFontSize, message.maxFontSize);
+    handled = true;
+  }
+  if (message.overrideTextColor) {
+    overrideTextColor(message.overrideTextColor);
     handled = true;
   }
   return handled;
