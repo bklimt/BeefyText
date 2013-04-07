@@ -15,12 +15,18 @@ var fontWeightValue = function(str, defaultValue) {
 
 var elementsWithFontWeightLessThan = function(minWeight) {
   return $("*").filter(function() {
+    if (!fontWeightValue($(this).css("font-weight"))) {
+      return false;
+    }
     return fontWeightValue($(this).css("font-weight"), -Infinity) < minWeight;
   });
 };
 
 var elementsWithFontWeightGreaterThan = function(maxWeight) {
   return $("*").filter(function() {
+    if (!fontWeightValue($(this).css("font-weight"))) {
+      return false;
+    }
     return fontWeightValue($(this).css("font-weight"), Infinity) > maxWeight;
   });
 };
@@ -70,6 +76,9 @@ var fontSizeValue = function(str, defaultValue) {
 
 var elementsWithFontSizeLessThan = function(minSize) {
   return $("*").filter(function() {
+    if (!$(this).css("font-size")) {
+      return false;
+    }
     if ($(this).css("font-size") === "0px") {
       return false;
     }
@@ -78,10 +87,13 @@ var elementsWithFontSizeLessThan = function(minSize) {
 };
 
 var elementsWithFontSizeGreaterThan = function(maxSize) {
-  if ($(this).css("font-size") === "0px") {
-    return false;
-  }
   return $("*").filter(function() {
+    if (!$(this).css("font-size")) {
+      return false;
+    }
+    if ($(this).css("font-size") === "0px") {
+      return false;
+    }
     return fontSizeValue($(this).css("font-size"), Infinity) > maxSize;
   });
 };
@@ -130,22 +142,54 @@ var overrideTextColor = function(color) {
  * Routers
  */
 
+var pendingFontWeightJob = {};
+var pendingFontSizeJob = {};
+var pendingTextColorJob = {};
+
+/**
+ * Sets a function to run in the near future, cancelling any previous function
+ * registered for that job. This is used so that if font-size is changed a
+ * bunch rapidly in quick succession, the calls don't pile up.
+ */
+var enqueue = function(job, func) {
+  if (job.timeout) {
+    clearTimeout(job.timeout);
+  }
+  setTimeout(function() {
+    delete job.timeout;
+    func();
+  }, 100);
+};
+
+/**
+ * Tries routing a message to this extension, returning true iff handled.
+ */
 var process = function(message) {
   var handled = false;
+
   if (message.minFontWeight || message.maxFontWeight) {
-    normalizeFontWeight(message.minFontWeight, message.maxFontWeight);
+    enqueue(pendingFontWeightJob, function() {
+      normalizeFontWeight(message.minFontWeight, message.maxFontWeight);
+    });
     handled = true;
   }
+
   if (message.minFontSize || message.maxFontSize) {
-    normalizeFontSize(message.minFontSize, message.maxFontSize);
+    enqueue(pendingFontSizeJob, function() {
+      normalizeFontSize(message.minFontSize, message.maxFontSize);
+    });
     handled = true;
   }
+
   if (message.overrideTextColor) {
-    overrideTextColor(message.overrideTextColor);
+    enqueue(pendingTextColorJob, function() {
+      overrideTextColor(message.overrideTextColor);
+    });
     handled = true;
   }
   return handled;
 };
+
 
 // Listen for DOM messages to rerun the method.
 window.addEventListener("message", function(event) {
@@ -154,6 +198,7 @@ window.addEventListener("message", function(event) {
   }
   process(event.data);
 }, false);
+
 
 // Listen for Chrome messages to rerun the method.
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {

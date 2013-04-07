@@ -61,4 +61,13 @@ $("#fontSizeSlider").slider({
   }
 });
 
+$("#textColorPicker").minicolors({
+  inline: true,
+  change: function(hex, opacity) {
+    sendMessage({
+      overrideTextColor: hex
+    });
+  }
+});
+
 });

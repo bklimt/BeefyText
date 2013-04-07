@@ -4,6 +4,7 @@
     <title>Beefy Text</title>
     <link href="css/reset.css" rel="stylesheet">
     <link href="css/ui-lightness/jquery-ui-1.10.2.custom.css" rel="stylesheet">
+    <link href="minicolors/jquery.minicolors.css" rel="stylesheet">
     <style>
       body {
         width: 500px;
@@ -25,10 +26,13 @@
       }
 
       td {
-        text-align: right;
         vertical-align: middle;
         padding-top: 5px;
         padding-bottom: 5px;
+      }
+
+      .right {
+        text-align: right;
       }
 
       #tooltip {
@@ -58,7 +62,8 @@
       - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
      -->
     <script src="ext/jquery.js"></script>
-	  <script src="ext/jquery-ui.js"></script>
+    <script src="ext/jquery-ui.js"></script>
+    <script src="minicolors/jquery.minicolors.js"></script>
     <script src="popup.js"></script>
   </head>
   <body>
@@ -67,12 +72,16 @@
       <tr>
         <th colspan="2">Beefy Text</th>
       <tr>
-        <td><span class="sliderLabel">Font Weight Range:</span></td>
+        <td class="right"><span class="sliderLabel">Font Weight Range:</span></td>
         <td><div class="slider" id="fontWeightSlider"></div></td>
       </tr>
       <tr>
-        <td><span class="sliderLabel">Font Size Range:</span></td>
+        <td class="right"><span class="sliderLabel">Font Size Range:</span></td>
         <td><div class="slider" id="fontSizeSlider"></div></td>
+      </tr>
+      <tr>
+        <td class="right"><span class="sliderLabel">Text Color:</span></td>
+        <td><div class="colorpicker" id="textColorPicker"></div></td>
       </tr>
     </table>
   </body>

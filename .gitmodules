@@ -1,0 +1,3 @@
+[submodule "minicolors"]
+	path = minicolors
+	url = git://github.com/claviska/jquery-miniColors.git
